@@ -1,0 +1,320 @@
+'use client'
+
+import React, { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react'
+
+interface AudioTrack {
+  id: string
+  title: string
+  url: string
+  size: number
+  modified: string
+}
+
+interface AudioContextType {
+  // 播放状态
+  isPlaying: boolean
+  currentTime: number
+  duration: number
+  volume: number
+  isMuted: boolean
+  currentTrack: number
+  backgroundTracks: AudioTrack[]
+  isLoading: boolean
+
+  // 控制方法
+  togglePlayPause: () => void
+  nextTrack: () => void
+  prevTrack: () => void
+  setVolume: (volume: number) => void
+  toggleMute: () => void
+  seekTo: (time: number) => void
+  loadAudioTracks: () => Promise<void>
+
+  // 音频元素引用
+  audioRef: React.RefObject<HTMLAudioElement>
+}
+
+const AudioContext = createContext<AudioContextType | undefined>(undefined)
+
+export function useAudio() {
+  const context = useContext(AudioContext)
+  if (context === undefined) {
+    throw new Error('useAudio must be used within an AudioProvider')
+  }
+  return context
+}
+
+interface AudioProviderProps {
+  children: ReactNode
+}
+
+export function AudioProvider({ children }: AudioProviderProps) {
+  // 从localStorage恢复音频状态，确保页面跳转时状态保持
+  const [isPlaying, setIsPlaying] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('audio-isPlaying')
+      return saved ? JSON.parse(saved) : false
+    }
+    return false
+  })
+
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [volume, setVolumeState] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('audio-volume')
+      return saved ? parseFloat(saved) : 0.3
+    }
+    return 0.3
+  })
+
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('audio-isMuted')
+      return saved ? JSON.parse(saved) : false
+    }
+    return false
+  })
+
+  const [currentTrack, setCurrentTrack] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('audio-currentTrack')
+      return saved ? parseInt(saved) : 0
+    }
+    return 0
+  })
+
+  const [backgroundTracks, setBackgroundTracks] = useState<AudioTrack[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  // 加载音频文件列表
+  const loadAudioTracks = async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch('/api/audio')
+      const data = await response.json()
+      setBackgroundTracks(data.tracks || [])
+
+      // 如果没有音频文件，使用默认列表
+      if (data.tracks.length === 0) {
+        setBackgroundTracks([
+          {
+            id: 'default-1',
+            title: '游戏科学《黑神话：悟空》主题音乐',
+            url: '/游戏科学《黑神话：悟空》主题音乐.mp3',
+            size: 0,
+            modified: new Date().toISOString()
+          }
+        ])
+      }
+    } catch (error) {
+      console.error('Failed to load audio tracks:', error)
+      // 使用默认列表作为后备
+      setBackgroundTracks([
+        {
+          id: 'fallback-1',
+          title: '游戏科学《黑神话：悟空》主题音乐',
+          url: '/游戏科学《黑神话：悟空》主题音乐.mp3',
+          size: 0,
+          modified: new Date().toISOString()
+        }
+      ])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // 组件挂载时加载音频列表
+  useEffect(() => {
+    loadAudioTracks()
+  }, [])
+
+  // 状态持久化：将音频状态保存到localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('audio-isPlaying', JSON.stringify(isPlaying))
+    }
+  }, [isPlaying])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('audio-volume', volume.toString())
+    }
+  }, [volume])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('audio-isMuted', JSON.stringify(isMuted))
+    }
+  }, [isMuted])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('audio-currentTrack', currentTrack.toString())
+    }
+  }, [currentTrack])
+
+  // 音频列表加载完成后自动开始播放（仅首次）
+  const [hasAutoStarted, setHasAutoStarted] = useState(false)
+  useEffect(() => {
+    if (backgroundTracks.length > 0 && !isLoading && !hasAutoStarted) {
+      const timer = setTimeout(() => {
+        setIsPlaying(true)
+        setHasAutoStarted(true)
+      }, 1000) // 给更多时间让音频加载
+      return () => clearTimeout(timer)
+    }
+  }, [backgroundTracks.length, isLoading, hasAutoStarted])
+
+  // 音频事件监听
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const setAudioData = () => {
+      setDuration(audio.duration)
+      setCurrentTime(audio.currentTime)
+    }
+
+    const setAudioTime = () => setCurrentTime(audio.currentTime)
+
+    const handleEnded = () => {
+      // 自动播放下一首，实现循环播放
+      const nextTrack = (currentTrack + 1) % backgroundTracks.length
+      setCurrentTrack(nextTrack)
+      // 保持播放状态，实现无缝循环
+      setTimeout(() => {
+        setIsPlaying(true)
+      }, 100)
+    }
+
+    const handleError = (e: Event) => {
+      console.error('Audio error:', e)
+      // 如果当前音频出错，尝试播放下一首
+      if (backgroundTracks.length > 1) {
+        const nextTrack = (currentTrack + 1) % backgroundTracks.length
+        setCurrentTrack(nextTrack)
+      }
+    }
+
+    audio.addEventListener('loadeddata', setAudioData)
+    audio.addEventListener('timeupdate', setAudioTime)
+    audio.addEventListener('ended', handleEnded)
+    audio.addEventListener('error', handleError)
+
+    return () => {
+      audio.removeEventListener('loadeddata', setAudioData)
+      audio.removeEventListener('timeupdate', setAudioTime)
+      audio.removeEventListener('ended', handleEnded)
+      audio.removeEventListener('error', handleError)
+    }
+  }, [backgroundTracks.length]) // 移除currentTrack依赖，避免重复绑定事件
+
+  // 音频播放控制
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.volume = volume
+    if (isPlaying) {
+      const playPromise = audio.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error('播放失败:', error)
+          setIsPlaying(false)
+        })
+      }
+    } else {
+      audio.pause()
+    }
+  }, [isPlaying, volume]) // 移除currentTrack依赖
+
+  // 控制方法
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying)
+  }
+
+  const nextTrack = () => {
+    const next = (currentTrack + 1) % backgroundTracks.length
+    setCurrentTrack(next)
+  }
+
+  const prevTrack = () => {
+    const prev = (currentTrack - 1 + backgroundTracks.length) % backgroundTracks.length
+    setCurrentTrack(prev)
+  }
+
+  const setVolume = (newVolume: number) => {
+    setVolumeState(newVolume)
+    setIsMuted(newVolume === 0)
+  }
+
+  const toggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (isMuted) {
+      audio.volume = volume
+      setIsMuted(false)
+    } else {
+      audio.volume = 0
+      setIsMuted(true)
+    }
+  }
+
+  const seekTo = (time: number) => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.currentTime = time
+    setCurrentTime(time)
+  }
+
+  const contextValue: AudioContextType = {
+    isPlaying,
+    currentTime,
+    duration,
+    volume,
+    isMuted,
+    currentTrack,
+    backgroundTracks,
+    isLoading,
+    togglePlayPause,
+    nextTrack,
+    prevTrack,
+    setVolume,
+    toggleMute,
+    seekTo,
+    loadAudioTracks,
+    audioRef
+  }
+
+  // 音频源更新
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio || !backgroundTracks[currentTrack]) return
+
+    const newSrc = backgroundTracks[currentTrack].url
+    if (audio.src !== newSrc) {
+      const wasPlaying = isPlaying
+      audio.src = newSrc
+      audio.load()
+      if (wasPlaying) {
+        audio.play().catch(console.error)
+      }
+    }
+  }, [currentTrack, backgroundTracks]) // 移除isPlaying依赖，避免循环触发
+
+  return (
+    <AudioContext.Provider value={contextValue}>
+      {/* 全局音频元素 */}
+      <audio
+        ref={audioRef}
+        preload="metadata"
+        style={{ display: 'none' }}
+      />
+      {children}
+    </AudioContext.Provider>
+  )
+}

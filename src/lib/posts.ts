@@ -6,6 +6,34 @@ import { calculateReadTime } from '@/lib/utils'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
+// 递归获取所有文章文件
+function getAllPostFiles(dir: string, baseDir: string = dir): string[] {
+  let files: string[] = []
+  
+  if (!fs.existsSync(dir)) {
+    return files
+  }
+
+  const items = fs.readdirSync(dir)
+  
+  for (const item of items) {
+    const fullPath = path.join(dir, item)
+    const stat = fs.statSync(fullPath)
+    
+    if (stat.isDirectory()) {
+      // 递归处理子目录
+      files = files.concat(getAllPostFiles(fullPath, baseDir))
+    } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
+      // 计算相对路径作为slug
+      const relativePath = path.relative(baseDir, fullPath)
+      const slug = relativePath.replace(/\.mdx?$/, '').replace(/\\/g, '/')
+      files.push(slug)
+    }
+  }
+  
+  return files
+}
+
 // 获取所有博客文章
 export async function getAllPosts(): Promise<BlogPost[]> {
   // 如果posts目录不存在，返回示例数据
@@ -13,14 +41,11 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     return getMockPosts()
   }
 
-  const fileNames = fs.readdirSync(postsDirectory)
+  const slugs = getAllPostFiles(postsDirectory)
   const allPostsData = await Promise.all(
-    fileNames
-      .filter(fileName => fileName.endsWith('.md') || fileName.endsWith('.mdx'))
-      .map(async (fileName) => {
-        const slug = fileName.replace(/\.mdx?$/, '')
-        return await getPostBySlug(slug)
-      })
+    slugs.map(async (slug) => {
+      return await getPostBySlug(slug)
+    })
   )
 
   return allPostsData
@@ -30,6 +55,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
 // 根据slug获取单个文章
 export async function getPostBySlug(slug: string): Promise<BlogPost> {
+  // 支持子目录结构，slug可能包含路径分隔符
   const fullPath = path.join(postsDirectory, `${slug}.md`)
   const mdxPath = path.join(postsDirectory, `${slug}.mdx`)
   

@@ -1,0 +1,304 @@
+/* 面包屑导航 */
+.breadcrumb {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.breadcrumbCurrent {
+  color: #111827;
+  font-weight: 500;
+}
+
+/* 页面内容 */
+.pageContent {
+  padding: 24px;
+}
+
+/* 章节 */
+.section {
+  margin-bottom: 32px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.viewAllLink {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.viewAllLink:hover {
+  color: #1d4ed8;
+}
+
+/* 文章网格 */
+.postGrid {
+  display: grid;
+  gap: 24px;
+}
+
+/* 文章卡片 */
+.postCard,
+.featuredPost {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.postCard:hover,
+.featuredPost:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.featuredPost {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.featuredPost:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* 文章头部 */
+.postHeader {
+  padding: 20px 20px 12px 20px;
+}
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.postBadges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.postDate {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.postTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.featuredPost .postTitle {
+  font-size: 20px;
+}
+
+.postLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.postLink:hover {
+  color: #2563eb;
+}
+
+.postExcerpt {
+  color: #374151;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.featuredPost .postExcerpt {
+  font-size: 16px;
+}
+
+/* 文章底部 */
+.postFooter {
+  padding: 0 20px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postAuthor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.authorAvatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.featuredPost .authorAvatar {
+  width: 24px;
+  height: 24px;
+}
+
+.authorName {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.postTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* 徽章 */
+.badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badgeFeatured {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badgeCategory {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.badgeTag {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+/* 分类网格 */
+.categoryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 分类卡片 */
+.categoryCard {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.categoryCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.categoryContent {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.categoryIcon {
+  font-size: 24px;
+}
+
+.categoryName {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.categoryCount {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.categoryArrow {
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+}
+
+/* 统计信息 */
+.statsSection {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.statBlue {
+  color: #2563eb;
+}
+
+.statGreen {
+  color: #059669;
+}
+
+.statPurple {
+  color: #7c3aed;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #6b7280;
+}

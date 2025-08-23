@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* 基础样式 */
+/* 基础样式重置 */
 * {
   margin: 0;
   padding: 0;
@@ -11,19 +7,90 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9fafb;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 内联代码样式 */
-.inline-code {
-  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
+/* 链接样式 */
+a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* 截断文本样式 */
+a:hover {
+  color: #1d4ed8;
+}
+
+/* 按钮基础样式 */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* 输入框样式 */
+input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  background: #e5e7eb;
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #3b82f6;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #e5e7eb;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: #3b82f6;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* 文本截断工具类 */
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -53,6 +120,7 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -66,7 +134,9 @@ body {
 
 /* 博客文章内容样式 */
 .blog-post {
-  @apply text-gray-900 leading-relaxed;
+  color: #1f2937;
+  line-height: 1.7;
+  font-size: 16px;
 }
 
 .blog-post h1,
@@ -75,101 +145,121 @@ body {
 .blog-post h4,
 .blog-post h5,
 .blog-post h6 {
-  @apply font-bold text-gray-900 mb-4 leading-tight;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  line-height: 1.3;
 }
 
 .blog-post h1 {
-  @apply text-3xl;
+  font-size: 32px;
 }
 
 .blog-post h2 {
-  @apply text-2xl;
+  font-size: 24px;
 }
 
 .blog-post h3 {
-  @apply text-xl;
+  font-size: 20px;
+}
+
+.blog-post h4 {
+  font-size: 18px;
 }
 
 .blog-post p {
-  @apply mb-4 text-gray-700;
+  margin-bottom: 16px;
+  color: #374151;
 }
 
 .blog-post blockquote {
-  @apply border-l-4 border-blue-500 pl-4 italic text-gray-600 my-4 bg-gray-50 p-4 rounded-r-lg;
+  border-left: 4px solid #3b82f6;
+  padding-left: 16px;
+  font-style: italic;
+  color: #6b7280;
+  margin: 16px 0;
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 0 8px 8px 0;
 }
 
 .blog-post ul,
 .blog-post ol {
-  @apply mb-4 ml-6;
+  margin-bottom: 16px;
+  margin-left: 24px;
 }
 
 .blog-post li {
-  @apply mb-2 text-gray-700;
+  margin-bottom: 8px;
+  color: #374151;
 }
 
 .blog-post code {
-  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
 .blog-post pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+  background-color: #1f2937;
+  color: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-size: 14px;
 }
 
 .blog-post pre code {
-  @apply bg-transparent text-gray-100 p-0;
+  background-color: transparent;
+  color: #f9fafb;
+  padding: 0;
 }
 
 .blog-post a {
-  @apply text-blue-600 hover:text-blue-800 underline;
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.blog-post a:hover {
+  color: #1d4ed8;
 }
 
 .blog-post strong {
-  @apply font-semibold text-gray-900;
+  font-weight: 600;
+  color: #111827;
 }
 
 .blog-post em {
-  @apply italic;
+  font-style: italic;
 }
 
 /* 表格样式 */
 .blog-post table {
-  @apply w-full border-collapse border border-gray-300 my-4;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #d1d5db;
+  margin: 16px 0;
 }
 
 .blog-post th,
 .blog-post td {
-  @apply border border-gray-300 px-4 py-2;
+  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  text-align: left;
 }
 
 .blog-post th {
-  @apply bg-gray-50 font-semibold text-gray-900;
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #111827;
 }
 
 .blog-post td {
-  @apply text-gray-700;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .blog-post {
-    @apply text-sm;
-  }
-  
-  .blog-post h1 {
-    @apply text-2xl;
-  }
-  
-  .blog-post h2 {
-    @apply text-xl;
-  }
-  
-  .blog-post h3 {
-    @apply text-lg;
-  }
-  
-  .blog-post pre {
-    @apply text-sm;
-  }
+  color: #374151;
 }
 
 /* 动画效果 */
@@ -188,6 +278,19 @@ body {
   animation: fadeIn 0.5s ease-out;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 /* 卡片悬停效果 */
 .card-hover {
   transition: all 0.3s ease;
@@ -200,35 +303,77 @@ body {
 
 /* 按钮样式 */
 .btn-primary {
-  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
 }
 
 .btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
 }
 
 .btn-outline {
-  @apply border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-/* 代码高亮增强 */
-.hljs {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm;
+.btn-outline:hover {
+  background-color: #2563eb;
+  color: white;
 }
 
 /* 加载动画 */
 .loading-spinner {
-  @apply inline-block w-4 h-4 border-2 border-gray-200 border-t-blue-600 rounded-full animate-spin;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-/* 移动端优化 */
-@media (max-width: 1024px) {
-  .lg\:col-span-3 {
-    display: none;
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .blog-post {
+    font-size: 14px;
   }
   
-  .lg\:col-span-6 {
-    grid-column: span 12 / span 12;
+  .blog-post h1 {
+    font-size: 24px;
+  }
+  
+  .blog-post h2 {
+    font-size: 20px;
+  }
+  
+  .blog-post h3 {
+    font-size: 18px;
+  }
+  
+  .blog-post pre {
+    font-size: 12px;
+    padding: 12px;
   }
 }
 
@@ -252,4 +397,17 @@ body {
   .blog-post pre {
     page-break-inside: avoid;
   }
-} 
+}
+
+/* 工具类 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

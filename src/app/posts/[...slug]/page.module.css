@@ -1,0 +1,231 @@
+/* 面包屑导航 */
+.breadcrumb {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.breadcrumbLink {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumbLink:hover {
+  color: #374151;
+}
+
+.breadcrumbArrow {
+  width: 16px;
+  height: 16px;
+  margin: 0 8px;
+}
+
+.breadcrumbCurrent {
+  color: #111827;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 文章 */
+.article {
+  padding: 24px;
+}
+
+/* 文章头部 */
+.articleHeader {
+  margin-bottom: 32px;
+}
+
+.articleMeta {
+  margin-bottom: 16px;
+}
+
+.articleBadges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.articleTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.articleExcerpt {
+  font-size: 18px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* 文章信息 */
+.articleInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.authorAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.authorName {
+  font-weight: 500;
+  color: #111827;
+}
+
+.authorEmail {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.publishInfo {
+  text-align: right;
+}
+
+.publishDate {
+  font-size: 14px;
+  color: #6b7280;
+  display: block;
+}
+
+.readTime {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 文章标签 */
+.articleTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* 徽章 */
+.badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badgeCategory {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.badgeFeatured {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badgeTag {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+/* 文章内容 */
+.articleContent {
+  max-width: none;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* 文章底部 */
+.articleFooter {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.articleActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.actionButton:hover {
+  color: #2563eb;
+}
+
+.actionIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.updateInfo {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .articleTitle {
+    font-size: 24px;
+  }
+  
+  .articleExcerpt {
+    font-size: 16px;
+  }
+  
+  .articleInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .publishInfo {
+    text-align: left;
+  }
+  
+  .articleActions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

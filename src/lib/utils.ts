@@ -1,9 +1,8 @@
 import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
 
-// 合并CSS类名
+// 合并CSS类名（不再使用tailwind-merge）
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return clsx(inputs)
 }
 
 // 格式化日期
@@ -84,7 +83,7 @@ export function formatFileSize(bytes: number): string {
 export function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600)
   const minutes = Math.floor((seconds % 3600) / 60)
-  const remainingSeconds = seconds % 60
+  const remainingSeconds = Math.floor(seconds % 60)
 
   if (hours > 0) {
     return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`

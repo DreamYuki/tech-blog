@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/posts'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import styles from './page.module.css'
 
 export default async function Home() {
   const posts = await getAllPosts()
@@ -11,128 +10,124 @@ export default async function Home() {
   return (
     <>
       {/* 面包屑导航 */}
-      <div className="px-6 py-4 border-b border-gray-200">
-        <nav className="flex items-center text-sm text-gray-500">
-          <span className="text-gray-900 font-medium">首页</span>
+      <div className={styles.breadcrumb}>
+        <nav className={styles.breadcrumbNav}>
+          <span className={styles.breadcrumbCurrent}>首页</span>
         </nav>
       </div>
 
-      <div className="p-6">
+      <div className={styles.pageContent}>
         {/* 特色文章 */}
         {featuredPosts.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">特色文章</h2>
-            <div className="grid gap-6">
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>特色文章</h2>
+            <div className={styles.postGrid}>
               {featuredPosts.map((post) => (
-                <Card key={post.slug} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                <article key={post.slug} className={styles.featuredPost}>
+                  <div className={styles.postHeader}>
+                    <div className={styles.postMeta}>
+                      <div className={styles.postBadges}>
+                        <span className={`${styles.badge} ${styles.badgeFeatured}`}>
                           特色
-                        </Badge>
-                        <Badge variant="outline">
+                        </span>
+                        <span className={`${styles.badge} ${styles.badgeCategory}`}>
                           {post.category}
-                        </Badge>
+                        </span>
                       </div>
-                      <time className="text-sm text-gray-500">
+                      <time className={styles.postDate}>
                         {post.date}
                       </time>
                     </div>
-                    <CardTitle className="text-xl">
-                      <Link href={`/posts/${post.slug}`} className="hover:text-blue-600 transition-colors">
+                    <h3 className={styles.postTitle}>
+                      <Link href={`/posts/${post.slug}`} className={styles.postLink}>
                         {post.title}
                       </Link>
-                    </CardTitle>
-                    <CardDescription className="text-base">
+                    </h3>
+                    <p className={styles.postExcerpt}>
                       {post.excerpt}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <img 
-                          src={post.author.avatar || "/images/default-avatar.jpg"} 
-                          alt={post.author.name}
-                          className="w-6 h-6 rounded-full"
-                        />
-                        <span className="text-sm text-gray-600">{post.author.name}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {post.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
+                    </p>
+                  </div>
+                  <div className={styles.postFooter}>
+                    <div className={styles.postAuthor}>
+                      <img
+                        src={post.author.avatar || "/images/default-avatar.jpg"}
+                        alt={post.author.name}
+                        className={styles.authorAvatar}
+                      />
+                      <span className={styles.authorName}>{post.author.name}</span>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className={styles.postTags}>
+                      {post.tags.map((tag) => (
+                        <span key={tag} className={`${styles.badge} ${styles.badgeTag}`}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
         )}
 
         {/* 最新文章 */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">最新文章</h2>
-            <Link href="/posts" className="text-blue-600 hover:text-blue-800 font-medium">
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>最新文章</h2>
+            <Link href="/posts" className={styles.viewAllLink}>
               查看全部 →
             </Link>
           </div>
-          
-          <div className="grid gap-6">
+
+          <div className={styles.postGrid}>
             {recentPosts.map((post) => (
-              <Card key={post.slug} className="hover:shadow-md transition-shadow">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Badge variant="outline">
+              <article key={post.slug} className={styles.postCard}>
+                <div className={styles.postHeader}>
+                  <div className={styles.postMeta}>
+                    <div className={styles.postBadges}>
+                      <span className={`${styles.badge} ${styles.badgeCategory}`}>
                         {post.category}
-                      </Badge>
+                      </span>
                     </div>
-                    <time className="text-sm text-gray-500">
+                    <time className={styles.postDate}>
                       {post.date}
                     </time>
                   </div>
-                  <CardTitle className="text-lg">
-                    <Link href={`/posts/${post.slug}`} className="hover:text-blue-600 transition-colors">
+                  <h3 className={styles.postTitle}>
+                    <Link href={`/posts/${post.slug}`} className={styles.postLink}>
                       {post.title}
                     </Link>
-                  </CardTitle>
-                  <CardDescription>
+                  </h3>
+                  <p className={styles.postExcerpt}>
                     {post.excerpt}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <img 
-                        src={post.author.avatar || "/images/default-avatar.jpg"} 
-                        alt={post.author.name}
-                        className="w-5 h-5 rounded-full"
-                      />
-                      <span className="text-sm text-gray-600">{post.author.name}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                  </p>
+                </div>
+                <div className={styles.postFooter}>
+                  <div className={styles.postAuthor}>
+                    <img
+                      src={post.author.avatar || "/images/default-avatar.jpg"}
+                      alt={post.author.name}
+                      className={styles.authorAvatar}
+                    />
+                    <span className={styles.authorName}>{post.author.name}</span>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className={styles.postTags}>
+                    {post.tags.slice(0, 3).map((tag) => (
+                      <span key={tag} className={`${styles.badge} ${styles.badgeTag}`}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </div>
 
         {/* 热门分类 */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">热门分类</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>热门分类</h2>
+          <div className={styles.categoryGrid}>
             {[
               { name: '前端开发', count: 12, icon: '🌐' },
               { name: '后端开发', count: 8, icon: '⚙️' },
@@ -141,40 +136,38 @@ export default async function Home() {
               { name: '开发工具', count: 7, icon: '🛠️' },
               { name: '技术分享', count: 4, icon: '📚' },
             ].map((category) => (
-              <Card key={category.name} className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{category.icon}</span>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{category.name}</h3>
-                        <p className="text-sm text-gray-600">{category.count} 篇文章</p>
-                      </div>
+              <div key={category.name} className={styles.categoryCard}>
+                <div className={styles.categoryContent}>
+                  <div className={styles.categoryInfo}>
+                    <span className={styles.categoryIcon}>{category.icon}</span>
+                    <div>
+                      <h3 className={styles.categoryName}>{category.name}</h3>
+                      <p className={styles.categoryCount}>{category.count} 篇文章</p>
                     </div>
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
                   </div>
-                </CardHeader>
-              </Card>
+                  <svg className={styles.categoryArrow} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* 统计信息 */}
-        <div className="border-t border-gray-200 pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">{posts.length}</div>
-              <div className="text-sm text-gray-600">总文章数</div>
+        <div className={styles.statsSection}>
+          <div className={styles.statsGrid}>
+            <div className={styles.statItem}>
+              <div className={`${styles.statNumber} ${styles.statBlue}`}>{posts.length}</div>
+              <div className={styles.statLabel}>总文章数</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">6</div>
-              <div className="text-sm text-gray-600">文章分类</div>
+            <div className={styles.statItem}>
+              <div className={`${styles.statNumber} ${styles.statGreen}`}>6</div>
+              <div className={styles.statLabel}>文章分类</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">1.2k</div>
-              <div className="text-sm text-gray-600">总浏览量</div>
+            <div className={styles.statItem}>
+              <div className={`${styles.statNumber} ${styles.statPurple}`}>1.2k</div>
+              <div className={styles.statLabel}>总浏览量</div>
             </div>
           </div>
         </div>

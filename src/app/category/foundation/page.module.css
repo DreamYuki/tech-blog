@@ -1,0 +1,368 @@
+/* 面包屑导航 */
+.breadcrumb {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.breadcrumbLink {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumbLink:hover {
+  color: #374151;
+}
+
+.breadcrumbArrow {
+  width: 16px;
+  height: 16px;
+  margin: 0 8px;
+}
+
+.breadcrumbCurrent {
+  color: #111827;
+  font-weight: 500;
+}
+
+/* 容器 */
+.container {
+  padding: 24px;
+}
+
+/* 介绍部分 */
+.intro {
+  margin-bottom: 32px;
+}
+
+.introHeader {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 20px;
+  color: #6b7280;
+  max-width: 768px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* 修炼要点 */
+.practicePoints {
+  background: linear-gradient(to right, #fef3c7, #ddd6fe);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.practiceTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.practiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  color: #374151;
+}
+
+.practiceItem {
+  /* 每个修炼要点项目 */
+}
+
+.practiceItemTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.practiceItemDesc {
+  line-height: 1.5;
+}
+
+/* 文章部分 */
+.articlesSection {
+  margin-bottom: 32px;
+}
+
+.articlesTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.articlesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.articleCard {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.articleCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.articleHeader {
+  padding: 20px 20px 12px 20px;
+}
+
+.articleMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.readTime {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.articleTitle {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.articleLink {
+  color: #111827;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.articleLink:hover {
+  color: #2563eb;
+}
+
+.articleExcerpt {
+  color: #6b7280;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.articleFooter {
+  padding: 0 20px 20px 20px;
+}
+
+.articleTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.articleInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.articleDate {
+  /* 文章日期样式 */
+}
+
+/* 徽章 */
+.badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badgeDifficulty {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badgeTag {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.badgeFeatured {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-size: 12px;
+}
+
+/* 修炼进度 */
+.progressSection {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.progressTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.progressList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progressItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progressLabel {
+  color: #374151;
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progressBarBg {
+  width: 128px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 8px;
+}
+
+.progressBarFill {
+  background-color: #f59e0b;
+  height: 8px;
+  border-radius: 9999px;
+  transition: width 0.3s;
+}
+
+.progressPercent {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.progressTip {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.progressTipText {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 相关链接 */
+.relatedSection {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.relatedTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.relatedCard {
+  display: block;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+}
+
+.relatedCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.relatedCardContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.relatedIcon {
+  font-size: 24px;
+}
+
+.relatedCardTitle {
+  font-weight: 500;
+  color: #111827;
+}
+
+.relatedCardDesc {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+  
+  .description {
+    font-size: 18px;
+  }
+  
+  .practiceGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .articlesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progressItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
