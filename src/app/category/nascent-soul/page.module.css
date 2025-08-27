@@ -366,3 +366,29 @@
     grid-template-columns: 1fr;
   }
 }
+
+:global(.dark) .breadcrumb{border-bottom-color:#1f2937}
+:global(.dark) .breadcrumbNav{color:#94a3b8}
+:global(.dark) .breadcrumbLink{color:#94a3b8}
+:global(.dark) .breadcrumbLink:hover{color:#e5e7eb}
+:global(.dark) .breadcrumbCurrent{color:#e5e7eb}
+:global(.dark) .title{color:#e5e7eb}
+:global(.dark) .description{color:#94a3b8}
+:global(.dark) .practicePoints{background:linear-gradient(to right,#111827,#1f2937)}
+:global(.dark) .articlesTitle{color:#e5e7eb}
+:global(.dark) .articleCard{background:#0f172a;border-color:#1f2937}
+:global(.dark) .articleTitle{color:#e5e7eb}
+:global(.dark) .articleExcerpt{color:#94a3b8}
+:global(.dark) .readTime{color:#94a3b8}
+:global(.dark) .badgeDifficulty{background:#1f2937;color:#a5b4fc}
+:global(.dark) .badgeTag{background:#0b1220;color:#94a3b8;border-color:#1f2937}
+:global(.dark) .badgeFeatured{background:#0b1220;color:#93c5fd}
+:global(.dark) .progressSection{background:#0f172a;border-color:#1f2937}
+:global(.dark) .progressTitle{color:#e5e7eb}
+:global(.dark) .progressLabel{color:#e5e7eb}
+:global(.dark) .progressPercent{color:#94a3b8}
+:global(.dark) .relatedSection{background:#0b1220}
+:global(.dark) .relatedTitle{color:#e5e7eb}
+:global(.dark) .relatedCard{background:#0f172a}
+:global(.dark) .relatedCardTitle{color:#e5e7eb}
+:global(.dark) .relatedCardDesc{color:#94a3b8}

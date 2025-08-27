@@ -5,6 +5,7 @@ import styles from './layout.module.css'
 import { BackgroundAudioPlayer } from '@/components/BackgroundAudioPlayer'
 import { AudioProvider } from '@/contexts/AudioContext'
 import Link from 'next/link'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -62,11 +63,7 @@ export default function RootLayout({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
                     </div>
-                    <button className={styles.themeButton}>
-                      <svg className={styles.themeIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                      </svg>
-                    </button>
+                    <ThemeToggle className={styles.themeButton} />
                   </div>
 
                   {/* 移动端菜单按钮 */}

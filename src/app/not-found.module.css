@@ -120,3 +120,14 @@
 .contactLink:hover {
   color: #1d4ed8;
 }
+
+:global(.dark) .container{background:#0b1220}
+:global(.dark) .content{background:#0f172a;border-color:#1f2937}
+:global(.dark) .errorCode{color:#e5e7eb}
+:global(.dark) .errorTitle{color:#e5e7eb}
+:global(.dark) .errorMessage{color:#94a3b8}
+:global(.dark) .button{border-color:#334155;color:#e5e7eb}
+:global(.dark) .buttonPrimary{background:#1f2937;border-color:#1f2937}
+:global(.dark) .buttonSecondary{background:#0b1220}
+:global(.dark) .footerText{color:#94a3b8}
+:global(.dark) .contactLink{color:#60a5fa}

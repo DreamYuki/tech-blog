@@ -48,14 +48,6 @@ export default async function Home() {
                     </p>
                   </div>
                   <div className={styles.postFooter}>
-                    <div className={styles.postAuthor}>
-                      <img
-                        src={post.author.avatar || "/images/default-avatar.jpg"}
-                        alt={post.author.name}
-                        className={styles.authorAvatar}
-                      />
-                      <span className={styles.authorName}>{post.author.name}</span>
-                    </div>
                     <div className={styles.postTags}>
                       {post.tags.map((tag) => (
                         <span key={tag} className={`${styles.badge} ${styles.badgeTag}`}>
@@ -103,14 +95,6 @@ export default async function Home() {
                   </p>
                 </div>
                 <div className={styles.postFooter}>
-                  <div className={styles.postAuthor}>
-                    <img
-                      src={post.author.avatar || "/images/default-avatar.jpg"}
-                      alt={post.author.name}
-                      className={styles.authorAvatar}
-                    />
-                    <span className={styles.authorName}>{post.author.name}</span>
-                  </div>
                   <div className={styles.postTags}>
                     {post.tags.slice(0, 3).map((tag) => (
                       <span key={tag} className={`${styles.badge} ${styles.badgeTag}`}>

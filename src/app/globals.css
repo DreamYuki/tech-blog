@@ -411,3 +411,30 @@ input[type="range"]::-moz-range-thumb {
   white-space: nowrap;
   border: 0;
 }
+
+:root {}
+
+/* 暗黑模式全局覆盖 */
+.dark body {
+  color: #e5e7eb;
+  background-color: #0b1220;
+}
+
+.dark a { color: #93c5fd; }
+.dark a:hover { color: #bfdbfe; }
+
+/* 博客正文在暗黑模式下的可读性 */
+.dark .blog-post { color: #cbd5e1; }
+.dark .blog-post h1,
+.dark .blog-post h2,
+.dark .blog-post h3,
+.dark .blog-post h4,
+.dark .blog-post h5,
+.dark .blog-post h6 { color: #e5e7eb; }
+.dark .blog-post p,
+.dark .blog-post li,
+.dark .blog-post td { color: #cbd5e1; }
+.dark .blog-post strong { color: #e5e7eb; }
+.dark .blog-post code { background-color: #0b1220; color: #93c5fd; }
+.dark .blog-post pre { background-color: #0b1220; color: #e5e7eb; }
+.dark .blog-post blockquote { border-left-color: #334155; color: #94a3b8; background-color: #0b1220; }

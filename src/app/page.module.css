@@ -302,3 +302,25 @@
   font-size: 14px;
   color: #6b7280;
 }
+
+:global(.dark) .heroTitle{color:#e5e7eb}
+:global(.dark) .heroSubtitle{color:#94a3b8}
+:global(.dark) .sectionTitle{color:#e5e7eb}
+
+/* 文章卡片（首页） */
+:global(.dark) .postCard,
+:global(.dark) .featuredPost{background:#0f172a;border-color:#1f2937}
+:global(.dark) .postTitle{color:#e5e7eb}
+:global(.dark) .postExcerpt{color:#94a3b8}
+:global(.dark) .postDate{color:#94a3b8}
+:global(.dark) .authorName{color:#cbd5e1}
+
+/* 分类卡片（首页） */
+:global(.dark) .categoryCard{background:#0f172a;border-color:#1f2937}
+:global(.dark) .categoryName{color:#e5e7eb}
+:global(.dark) .categoryCount{color:#94a3b8}
+:global(.dark) .categoryArrow{color:#64748b}
+
+:global(.dark) .breadcrumb{border-bottom-color:#1f2937}
+:global(.dark) .breadcrumbNav{color:#94a3b8}
+:global(.dark) .breadcrumbCurrent{color:#e5e7eb}

@@ -190,6 +190,9 @@ export function AudioProvider({ children }: AudioProviderProps) {
     const audio = audioRef.current
     if (!audio) return
 
+    // 单曲时使用 loop 自动循环
+    audio.loop = backgroundTracks.length === 1
+
     const setAudioData = () => {
       setDuration(audio.duration)
       setCurrentTime(audio.currentTime)
@@ -198,21 +201,27 @@ export function AudioProvider({ children }: AudioProviderProps) {
     const setAudioTime = () => setCurrentTime(audio.currentTime)
 
     const handleEnded = () => {
-      // 自动播放下一首，实现循环播放
-      const nextTrack = (currentTrack + 1) % backgroundTracks.length
-      setCurrentTrack(nextTrack)
-      // 保持播放状态，实现无缝循环
-      setTimeout(() => {
-        setIsPlaying(true)
-      }, 100)
+      if (backgroundTracks.length > 1) {
+        // 多曲：顺序播放下一首
+        const next = (currentTrack + 1) % backgroundTracks.length
+        setCurrentTrack(next)
+        setTimeout(() => {
+          setIsPlaying(true)
+        }, 100)
+      } else {
+        // 单曲：兜底重播（避免某些环境 loop 被忽略）
+        audio.currentTime = 0
+        if (isPlaying) {
+          audio.play().catch(() => { })
+        }
+      }
     }
 
     const handleError = (e: Event) => {
       console.error('Audio error:', e)
-      // 如果当前音频出错，尝试播放下一首
       if (backgroundTracks.length > 1) {
-        const nextTrack = (currentTrack + 1) % backgroundTracks.length
-        setCurrentTrack(nextTrack)
+        const next = (currentTrack + 1) % backgroundTracks.length
+        setCurrentTrack(next)
       }
     }
 
@@ -227,7 +236,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('error', handleError)
     }
-  }, [backgroundTracks.length]) // 移除currentTrack依赖，避免重复绑定事件
+  }, [currentTrack, backgroundTracks.length, isPlaying])
 
   // 音频播放控制
   useEffect(() => {

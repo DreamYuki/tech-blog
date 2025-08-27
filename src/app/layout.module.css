@@ -4,16 +4,38 @@
   background-color: #f9fafb;
 }
 
+:global(.dark) .container {
+  background-color: #0b1220;
+}
+
 /* 顶部导航栏 */
 .header {
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.themeButton { color:#4b5563; }
+
+:global(.dark) .header {
+  background-color: #0f172a;
+  border-bottom-color: #1f2937;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.06);
+}
+
+:global(.dark) .themeButton { color:#e2e8f0; }
+
+/* 侧栏暗黑模式统一文字颜色 */
+:global(.dark) .leftSidebar,
+:global(.dark) .rightSidebar {
+  color:#e5e7eb;
 }
 
 .headerContent {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
   padding: 0 16px;
 }
 
@@ -239,6 +261,11 @@
     display: block;
     width: 200px;
     min-width: 200px;
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    height: calc(100vh - 104px);
+    overflow: auto;
   }
 }
 
@@ -383,11 +410,18 @@
   }
 }
 
+/* 中间内容卡片 */
 .mainCard {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
+}
+
+:global(.dark) .mainCard {
+  background-color: #0f172a;
+  border-color: #1f2937;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.04);
 }
 
 /* 右侧边栏 */
@@ -400,6 +434,11 @@
     display: block;
     width: 200px;
     min-width: 200px;
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    height: calc(100vh - 104px);
+    overflow: auto;
   }
 }
 
@@ -421,3 +460,6 @@
   width: 20px;
   height: 20px;
 }
+
+:global(.dark) .socialLink { color:#64748b; }
+:global(.dark) .socialLink:hover { color:#60a5fa; }
