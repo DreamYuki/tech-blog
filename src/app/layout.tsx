@@ -50,7 +50,7 @@ export default function RootLayout({
                       文章
                     </Link>
                     <Link href="/about" className={styles.navLink}>
-                      关于
+                      关于我
                     </Link>
                   </nav>
 

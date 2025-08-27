@@ -53,7 +53,7 @@ author:
   <ul>
     <li><a href="/">首页</a></li>
     <li><a href="/posts">文章</a></li>
-    <li><a href="/about">关于</a></li>
+    <li><a href="/about">关于我</a></li>
   </ul>
 </nav>
 ```

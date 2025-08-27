@@ -17,10 +17,10 @@ export default async function Home() {
       </div>
 
       <div className={styles.pageContent}>
-        {/* 特色文章 */}
+        {/* 置顶 */}
         {featuredPosts.length > 0 && (
           <div className={styles.section}>
-            <h2 className={styles.sectionTitle}>特色文章</h2>
+            <h2 className={styles.sectionTitle}>置顶</h2>
             <div className={styles.postGrid}>
               {featuredPosts.map((post) => (
                 <article key={post.slug} className={styles.featuredPost}>
