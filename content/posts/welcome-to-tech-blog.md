@@ -16,7 +16,7 @@ seo:
   keywords: ["个人博客", "自传", "修行", "AI时代"]
 media:
   images:
-    - "/images/welcome-banner.jpg"
+    - "/images/open_notebook_with_pen_digital_holographic_code_f_3e70a5e3-d5c7-42b0-abc0-b6963766cca7.png"
 ---
 
 # 为什么想写博客了？

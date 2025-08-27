@@ -146,26 +146,8 @@ export default function RootLayout({
 
                   {/* 右侧边栏 */}
                   <aside className={styles.rightSidebar}>
-                    <div className={styles.sidebarCard}>
-                      <h2 className={styles.sidebarTitle}>目录</h2>
-                      <nav className={styles.sidebarNav}>
-                        <a href="#section1" className={styles.sidebarNavLink}>
-                          快速开始
-                        </a>
-                        <a href="#section2" className={styles.sidebarNavLink}>
-                          安装配置
-                        </a>
-                        <a href="#section3" className={styles.sidebarNavLink}>
-                          基础使用
-                        </a>
-                        <a href="#section4" className={styles.sidebarNavLink}>
-                          高级功能
-                        </a>
-                      </nav>
-                    </div>
-
                     {/* 相关文章 */}
-                    <div className={`${styles.sidebarCard} ${styles.sidebarSection}`}>
+                    <div className={styles.sidebarCard}>
                       <h2 className={styles.sidebarTitle}>相关文章</h2>
                       <div className={styles.articleList}>
                         <a href="#" className={styles.articleItem}>

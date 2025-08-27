@@ -324,3 +324,15 @@
 :global(.dark) .breadcrumb{border-bottom-color:#1f2937}
 :global(.dark) .breadcrumbNav{color:#94a3b8}
 :global(.dark) .breadcrumbCurrent{color:#e5e7eb}
+
+.masonry{column-count:2;column-gap:16px}
+@media (max-width:768px){.masonry{column-count:1}}
+.cardM{break-inside:avoid;background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cover{display:block;width:100%;height:240px;object-fit:cover}
+@media (min-width:1024px){.cover{height:280px}}
+.body{padding:12px}
+.titleM{font-size:16px;font-weight:700;color:#111827;margin-bottom:6px;line-height:1.4}
+.subtitle{font-size:14px;color:#6b7280;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+:global(.dark) .cardM{background:#0f172a;border-color:#1f2937}
+:global(.dark) .titleM{color:#e5e7eb}
+:global(.dark) .subtitle{color:#94a3b8}
