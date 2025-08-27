@@ -30,8 +30,8 @@ interface AudioContextType {
   seekTo: (time: number) => void
   loadAudioTracks: () => Promise<void>
 
-  // 音频元素引用
-  audioRef: React.RefObject<HTMLAudioElement>
+  // 音频元素引用（可变引用，允许赋值）
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined)
@@ -86,7 +86,25 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
   const [backgroundTracks, setBackgroundTracks] = useState<AudioTrack[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [autoplayUnlocked, setAutoplayUnlocked] = useState(false)
+
+  // 全局单例 Audio：防止任何路由/404导致的卸载重建
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const w = window as any
+    if (!w.__globalAudio) {
+      const el = new Audio()
+      el.preload = 'metadata'
+      el.muted = false // 以静音方式初始化，规避浏览器自动播放限制
+      el.style.display = 'none'
+      try {
+        document.body.appendChild(el)
+      } catch { }
+      w.__globalAudio = el
+    }
+    audioRef.current = w.__globalAudio as HTMLAudioElement
+  }, [])
 
   // 加载音频文件列表
   const loadAudioTracks = async () => {
@@ -216,19 +234,41 @@ export function AudioProvider({ children }: AudioProviderProps) {
     const audio = audioRef.current
     if (!audio) return
 
-    audio.volume = volume
+    // 直接根据用户状态同步静音与音量
+    audio.muted = isMuted
+    if (!isMuted) {
+      audio.volume = volume
+    }
+
     if (isPlaying) {
       const playPromise = audio.play()
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error('播放失败:', error)
-          setIsPlaying(false)
-        })
+        playPromise
+          .then(() => {
+            if (!autoplayUnlocked) {
+              setAutoplayUnlocked(true)
+            }
+          })
+          .catch(error => {
+            // 若被浏览器策略阻止，添加一次性指针事件解锁（不做静音回退）
+            const notAllowed = (error && (error.name === 'NotAllowedError' || error.message?.includes('play() failed')))
+            if (notAllowed) {
+              const resume = () => {
+                audio.play().then(() => {
+                  setAutoplayUnlocked(true)
+                  document.removeEventListener('pointerdown', resume)
+                }).catch(() => {
+                  document.removeEventListener('pointerdown', resume)
+                })
+              }
+              document.addEventListener('pointerdown', resume, { once: true })
+            }
+          })
       }
     } else {
       audio.pause()
     }
-  }, [isPlaying, volume]) // 移除currentTrack依赖
+  }, [isPlaying, volume, isMuted, autoplayUnlocked])
 
   // 控制方法
   const togglePlayPause = () => {
@@ -296,24 +336,33 @@ export function AudioProvider({ children }: AudioProviderProps) {
     if (!audio || !backgroundTracks[currentTrack]) return
 
     const newSrc = backgroundTracks[currentTrack].url
-    if (audio.src !== newSrc) {
+    const resolved = typeof window !== 'undefined' ? new URL(newSrc, window.location.origin).href : newSrc
+    if (audio.src !== resolved) {
       const wasPlaying = isPlaying
-      audio.src = newSrc
+      audio.src = resolved
       audio.load()
       if (wasPlaying) {
-        audio.play().catch(console.error)
+        audio.play().then(() => {
+          setAutoplayUnlocked(true)
+        }).catch(() => {
+          // 等待用户手势解锁（不做静音自动播放回退）
+          const resume = () => {
+            audio.play().then(() => {
+              setAutoplayUnlocked(true)
+              document.removeEventListener('pointerdown', resume)
+            }).catch(() => {
+              document.removeEventListener('pointerdown', resume)
+            })
+          }
+          document.addEventListener('pointerdown', resume, { once: true })
+        })
       }
     }
-  }, [currentTrack, backgroundTracks]) // 移除isPlaying依赖，避免循环触发
+  }, [currentTrack, backgroundTracks])
 
   return (
     <AudioContext.Provider value={contextValue}>
-      {/* 全局音频元素 */}
-      <audio
-        ref={audioRef}
-        preload="metadata"
-        style={{ display: 'none' }}
-      />
+      {/* 全局音频元素移至 window.__globalAudio，不在React树内渲染 */}
       {children}
     </AudioContext.Provider>
   )

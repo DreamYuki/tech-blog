@@ -30,7 +30,7 @@ export default function RootLayout({
                   {/* Logo */}
                   <div className={styles.logo}>
                     <Link href="/" className={styles.logoLink}>
-                      AI散修 - 厉飞羽
+                      AI散修 - Manuel Huang
                     </Link>
                   </div>
 
