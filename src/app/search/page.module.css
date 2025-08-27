@@ -1,0 +1,7 @@
+.container{padding:24px}.title{font-size:24px;font-weight:700;color:#111827;margin-bottom:16px}.hint{color:#6b7280}.list{display:flex;flex-direction:column;gap:16px;margin-top:16px}.item{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:16px}.itemHeader{display:flex;align-items:center;gap:12px;margin-bottom:8px}.date{font-size:12px;color:#6b7280}.itemTitle{font-size:18px;font-weight:600;color:#111827;line-height:1.4}.itemLink{text-decoration:none;color:inherit}.itemLink:hover{color:#2563eb}.itemExcerpt{color:#374151}
+:global(.dark) .title{color:#e5e7eb}
+:global(.dark) .hint{color:#94a3b8}
+:global(.dark) .item{background:#0f172a;border-color:#1f2937}
+:global(.dark) .date{color:#94a3b8}
+:global(.dark) .itemTitle{color:#e5e7eb}
+:global(.dark) .itemExcerpt{color:#94a3b8}
