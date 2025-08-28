@@ -6,6 +6,24 @@ import { calculateReadTime } from '@/lib/utils'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
+// 封面占位：根据 slug 哈希稳定映射，避免重复
+const fallbackCovers = [
+  '/images/open_laptop_on_desk_with_floating_code_snippets_a_64a7a510-c3ee-441e-9f0c-d581584f084e.png',
+  '/images/open_notebook_with_pen_digital_holographic_code_f_3e70a5e3-d5c7-42b0-abc0-b6963766cca7.png',
+  '/images/colorful_web_browser_window_with_semantic_html_ta_34b737e2-1b77-481d-99c8-8e0a0f0231e3.png',
+  '/images/abstract_backend_server_diagram_glowing_in_futuri_a268425e-28f7-4de4-9d78-9e00ea800aa2.png',
+  '/images/neural_network_glowing_connections_embedding_vect_5887ab88-2353-434f-a1ba-8bb95916f6f4.png',
+]
+function hashSlug(slug: string): number {
+  let h = 0
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0
+  return h
+}
+function getFallbackCover(slug: string): string {
+  const idx = hashSlug(slug) % fallbackCovers.length
+  return fallbackCovers[idx]
+}
+
 // 递归获取所有文章文件
 function getAllPostFiles(dir: string, baseDir: string = dir): string[] {
   let files: string[] = []
@@ -72,9 +90,25 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
   const fileContents = fs.readFileSync(filePath, 'utf8')
   const { data, content } = matter(fileContents)
 
+  // 生成更合理的标题
+  let resolvedTitle: string | undefined = data.title
+  if (!resolvedTitle) {
+    const m = content.match(/^#\s+(.+)$/m)
+    if (m) resolvedTitle = m[1].trim()
+  }
+  if (!resolvedTitle) {
+    const last = slug.split('/').pop() || 'post'
+    resolvedTitle = last.replace(/[-_]+/g, ' ')
+  }
+
+  // 兜底封面
+  const images = (data as any)?.media?.images
+  const coverList = Array.isArray(images) && images.length > 0 ? images : [getFallbackCover(slug)]
+  const media = { ...(data as any)?.media, images: coverList }
+
   return {
     slug,
-    title: data.title || '未命名文章',
+    title: resolvedTitle,
     excerpt: data.excerpt || content.substring(0, 200) + '...',
     content,
     date: data.date || new Date().toISOString(),
@@ -89,12 +123,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
       avatar: '/images/avatar.jpg'
     },
     seo: {
-      title: data.seo?.title || data.title,
-      description: data.seo?.description || data.excerpt,
-      keywords: data.seo?.keywords || data.tags || [],
-      ogImage: data.seo?.ogImage || '/images/og-default.jpg'
+      title: (data.seo as any)?.title || resolvedTitle,
+      description: (data.seo as any)?.description || data.excerpt,
+      keywords: (data.seo as any)?.keywords || data.tags || [],
+      ogImage: (data.seo as any)?.ogImage || '/images/og-default.jpg'
     },
-    media: data.media
+    media
   }
 }
 

@@ -8,6 +8,7 @@ import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import SearchBox from '@/components/SearchBox'
 import SocialLinks from '@/components/SocialLinks'
+import MobileMenu from '@/components/MobileMenu'
 import { WechatFilled, GithubFilled } from '@ant-design/icons'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -66,11 +67,7 @@ export default function RootLayout({
                   </div>
 
                   {/* 移动端菜单按钮 */}
-                  <button className={styles.mobileMenuButton}>
-                    <svg className={styles.mobileMenuIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                  </button>
+                  <MobileMenu buttonClass={styles.mobileMenuButton} iconClass={styles.mobileMenuIcon} />
                 </div>
               </div>
             </header>
